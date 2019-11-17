@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: red-admin
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+  profiles:
+    active: dev
+
+#          starttls:
+#            enable: false
+#            required: false
