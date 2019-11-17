@@ -7,6 +7,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="red-admin" />
+        <module name="red-common" />
+        <module name="red-weixin" />
       </profile>
     </annotationProcessing>
   </component>

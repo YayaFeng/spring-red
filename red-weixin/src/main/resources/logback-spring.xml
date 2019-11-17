@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <springProperty scope="context" name="LOG_HOME" source="app.log.path"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="wx" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <FileNamePattern>${LOG_HOME}/wx.log.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <!--日志文件保留天数-->
+            <MaxHistory>30</MaxHistory>
+            <maxFileSize>50MB</maxFileSize>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+        <!--日志文件最大的大小-->
+        <!--<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>10MB</MaxFileSize>
+        </triggeringPolicy>-->
+    </appender>
+
+    <!--配置自定义日志输出类-->
+    <!--<appender name="kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            &lt;!&ndash;<pattern>%d{HH:mm:ss.SSS} ace-admin [%thread] %-5level %logger{36} - %msg%n</pattern>&ndash;&gt;
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+        <topic>nitp</topic>
+        &lt;!&ndash; we don't care how the log messages will be partitioned  &ndash;&gt;
+        <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.NoKeyKeyingStrategy" />
+
+        &lt;!&ndash; use async delivery. the application threads are not blocked by logging &ndash;&gt;
+        <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy" />
+
+        &lt;!&ndash; each <producerConfig> translates to regular kafka-client config (format: key=value) &ndash;&gt;
+        &lt;!&ndash; producer configs are documented here: https://kafka.apache.org/documentation.html#newproducerconfigs &ndash;&gt;
+        &lt;!&ndash; bootstrap.servers is the only mandatory producerConfig &ndash;&gt;
+        <producerConfig>bootstrap.servers=192.168.31.123:9092</producerConfig>
+        &lt;!&ndash; don't wait for a broker to ack the reception of a batch.  &ndash;&gt;
+        <producerConfig>acks=0</producerConfig>
+        &lt;!&ndash; wait up to 1000ms and collect log messages before sending them as a batch &ndash;&gt;
+        <producerConfig>linger.ms=1000</producerConfig>
+        &lt;!&ndash; even if the producer buffer runs full, do not block the application but start to drop messages &ndash;&gt;
+        <producerConfig>max.block.ms=0</producerConfig>
+        &lt;!&ndash; define a client-id that you use to identify yourself against the kafka broker &ndash;&gt;
+        <producerConfig>client.id=nitp</producerConfig>
+
+    </appender>
+
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="kafkaAppender" />
+    </appender>
+-->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="wx" />
+        <!--<appender-ref ref="ASYNC" />-->
+    </root>
+    <!-- <root level="INFO">
+         <appender-ref ref="STDOUT" />
+     </root>-->
+    <!--  <include resource="org/springframework/boot/logging/logback/base.xml"/>
+      <jmxConfigurator/>-->
+</configuration>
